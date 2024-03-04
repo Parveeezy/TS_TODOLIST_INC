@@ -1,19 +1,22 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, Dispatch, SetStateAction, useState} from 'react';
 import TodoListHeader from "../TodoListHeader/TodoListHeader";
 import Button from "../ui/Button/Button";
 import {FilteredTasksTypes} from "../../App";
+import {v4} from "uuid";
 
 export type TasksPropsTypes = {
-    id: number
+    id: string
     title: string
     isDone: boolean
-}
+};
 
 type TodoListPropsTypes = {
     title: string
     tasks: TasksPropsTypes[]
-    removeTaskHandler: (id: number) => void
+    removeTaskHandler: (id: string) => void
     changeFilter: (filter: FilteredTasksTypes) => void
+    changeTaskStatus: (id: string) => void
+    setTasks: Dispatch<SetStateAction<TasksPropsTypes[]>>
 };
 
 export const TodoList = (props: TodoListPropsTypes) => {
@@ -22,40 +25,59 @@ export const TodoList = (props: TodoListPropsTypes) => {
         title,
         tasks,
         removeTaskHandler,
-        changeFilter
+        changeFilter,
+        changeTaskStatus,
+        setTasks
     } = props;
 
-    const checkboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log(e)
-    }
+    const [value, setValue] = useState<string>('');
+
+    const onAddNewTask = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value)
+    };
+
+    const addTaskHandler = (value: string) => {
+        if (value) {
+            setTasks([
+                ...tasks, {
+                    id: v4(),
+                    title: value,
+                    isDone: false
+                }])
+            setValue('')
+        }
+    };
 
     let tasksList = tasks.length === 0
         ? <span>No tasks...</span>
         : (
-            <ul>
+            <ul style={{margin: 0, padding: 0}}>
                 {tasks.map((task) => {
                     return (
                         <li key={task.id}>
                             <input
                                 type="checkbox"
                                 checked={task.isDone}
-                                onChange={checkboxHandler}
+                                onChange={(e) => changeTaskStatus(task.id)}
                             />
                             <span>{task.title}</span>
                             <button onClick={() => removeTaskHandler(task.id)}>x</button>
+                            <button>edit</button>
                         </li>
                     )
                 })}
             </ul>
-        )
-    ;
+        );
 
     return (
         <div className={'todolist'}>
             <TodoListHeader title={title}/>
             <div>
-                <input/>
-                <button>+</button>
+                <input
+                    value={value}
+                    onChange={(e) => onAddNewTask(e)}
+                />
+                <button onClick={() => addTaskHandler(value)}>+</button>
             </div>
             {tasksList}
             <div>

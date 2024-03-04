@@ -8,7 +8,7 @@ type ButtonPropsTypes = {
 const Button = ({title, onClick}: ButtonPropsTypes) => {
 
     return (
-        <button onClick={onClick}>
+        <button onClick={onClick} style={{marginTop: 10}}>
             {title}
         </button>
     )
