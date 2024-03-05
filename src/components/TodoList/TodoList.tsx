@@ -3,6 +3,7 @@ import TodoListHeader from "../TodoListHeader/TodoListHeader";
 import Button from "../ui/Button/Button";
 import {FilteredTasksTypes} from "../../App";
 import {v4} from "uuid";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 export type TasksPropsTypes = {
     id: string
@@ -17,6 +18,7 @@ type TodoListPropsTypes = {
     changeFilter: (filter: FilteredTasksTypes) => void
     changeTaskStatus: (id: string) => void
     setTasks: Dispatch<SetStateAction<TasksPropsTypes[]>>
+    changeTitleValueHandler: (id: string, value: string) => void
 };
 
 export const TodoList = (props: TodoListPropsTypes) => {
@@ -27,7 +29,8 @@ export const TodoList = (props: TodoListPropsTypes) => {
         removeTaskHandler,
         changeFilter,
         changeTaskStatus,
-        setTasks
+        setTasks,
+        changeTitleValueHandler
     } = props;
 
     const [value, setValue] = useState<string>('');
@@ -48,6 +51,10 @@ export const TodoList = (props: TodoListPropsTypes) => {
         }
     };
 
+    const changeTitleHandler = (id: string, value: string) => {
+        changeTitleValueHandler(id, value)
+    }
+
     let tasksList = tasks.length === 0
         ? <span>No tasks...</span>
         : (
@@ -58,9 +65,12 @@ export const TodoList = (props: TodoListPropsTypes) => {
                             <input
                                 type="checkbox"
                                 checked={task.isDone}
-                                onChange={(e) => changeTaskStatus(task.id)}
+                                onChange={() => changeTaskStatus(task.id)}
                             />
-                            <span>{task.title}</span>
+                            <EditableSpan
+                                value={task.title}
+                                onChange={() => changeTitleHandler(task.id, value)}
+                            />
                             <button onClick={() => removeTaskHandler(task.id)}>x</button>
                             <button>edit</button>
                         </li>
