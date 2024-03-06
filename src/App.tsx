@@ -38,8 +38,8 @@ function App() {
         setTasks(tasks.map(t => t.id === id ? {...t, isDone: !t.isDone} : t))
     };
 
-    const changeTitleValueHandler = (id: string, value: string) => {
-        setTasks(tasks.map(t => t.id === id ? {...t, title: value} : t))
+    const changeTaskTitleValue = (id: string, newValue: string) => {
+        setTasks(tasks.map(t => t.id === id ? {...t, title: newValue} : t))
     }
 
     return (
@@ -51,7 +51,7 @@ function App() {
                 changeFilter={changeFilter}
                 changeTaskStatus={changeTaskStatus}
                 setTasks={setTasks}
-                changeTitleValueHandler={changeTitleValueHandler}
+                changeTaskTitleValue={changeTaskTitleValue}
             />
         </div>
     );

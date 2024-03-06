@@ -14,11 +14,11 @@ export type TasksPropsTypes = {
 type TodoListPropsTypes = {
     title: string
     tasks: TasksPropsTypes[]
+    setTasks: Dispatch<SetStateAction<TasksPropsTypes[]>>
     removeTaskHandler: (id: string) => void
     changeFilter: (filter: FilteredTasksTypes) => void
     changeTaskStatus: (id: string) => void
-    setTasks: Dispatch<SetStateAction<TasksPropsTypes[]>>
-    changeTitleValueHandler: (id: string, value: string) => void
+    changeTaskTitleValue: (id: string, newValue: string) => void
 };
 
 export const TodoList = (props: TodoListPropsTypes) => {
@@ -26,11 +26,11 @@ export const TodoList = (props: TodoListPropsTypes) => {
     const {
         title,
         tasks,
+        setTasks,
         removeTaskHandler,
         changeFilter,
         changeTaskStatus,
-        setTasks,
-        changeTitleValueHandler
+        changeTaskTitleValue,
     } = props;
 
     const [value, setValue] = useState<string>('');
@@ -51,16 +51,18 @@ export const TodoList = (props: TodoListPropsTypes) => {
         }
     };
 
-    const changeTitleHandler = (id: string, value: string) => {
-        changeTitleValueHandler(id, value)
-    }
-
     let tasksList = tasks.length === 0
         ? <span>No tasks...</span>
         : (
             <ul style={{margin: 0, padding: 0}}>
                 {tasks.map((task) => {
+
+                    const onChangeTaskValue = (id: string, newValue: string) => {
+                        changeTaskTitleValue(id, newValue)
+                    }
+
                     return (
+
                         <li key={task.id}>
                             <input
                                 type="checkbox"
@@ -68,8 +70,8 @@ export const TodoList = (props: TodoListPropsTypes) => {
                                 onChange={() => changeTaskStatus(task.id)}
                             />
                             <EditableSpan
-                                value={task.title}
-                                onChange={() => changeTitleHandler(task.id, value)}
+                                title={task.title}
+                                onChange={(val) => onChangeTaskValue(task.id, val)}
                             />
                             <button onClick={() => removeTaskHandler(task.id)}>x</button>
                             <button>edit</button>
