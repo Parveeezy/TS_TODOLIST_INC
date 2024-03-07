@@ -4,10 +4,10 @@ type TodoListHeaderPropsTypes = {
     title: string
 }
 
-const TodoListHeader = ({title}: TodoListHeaderPropsTypes) => {
+const TodoListHeader = ({ title }: TodoListHeaderPropsTypes) => {
     return (
-        <div style={{display: "flex", justifyContent: "space-between"}}>
-            <h2 style={{margin: 0}}>{title}</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <h2 style={{ margin: 0 }}>{title}</h2>
             <button>x</button>
         </div>
     );

@@ -1,4 +1,4 @@
-import {ChangeEvent, useState} from "react";
+import { ChangeEvent, useState } from 'react';
 
 type EditableSpanPropsType = {
     title: string
@@ -6,25 +6,22 @@ type EditableSpanPropsType = {
 }
 
 export function EditableSpan(props: EditableSpanPropsType) {
-    const [editMode, setEditMode] = useState<boolean>(false)
-    const [title, setTitle] = useState<string>('')
+    const [editMode, setEditMode] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>('');
 
     const activateEditMode = () => {
         setEditMode(true);
-        setTitle(props.title)
-    }
+        setTitle(props.title);
+    };
 
     const activateViewMode = () => {
         setEditMode(false);
-        props.onChange(title)
-    }
-
-    console.log(title)
+        props.onChange(title);
+    };
 
     const onChangeTitleValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-
+        setTitle(e.currentTarget.value);
+    };
     return (
         editMode
             ? <input
@@ -34,5 +31,5 @@ export function EditableSpan(props: EditableSpanPropsType) {
                 autoFocus
             />
             : <span onDoubleClick={activateEditMode}>{props.title}</span>
-    )
+    );
 }

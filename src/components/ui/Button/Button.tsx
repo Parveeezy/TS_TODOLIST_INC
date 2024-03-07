@@ -5,13 +5,13 @@ type ButtonPropsTypes = {
     onClick: () => void
 };
 
-const Button = ({title, onClick}: ButtonPropsTypes) => {
+const Button = ({ title, onClick }: ButtonPropsTypes) => {
 
     return (
-        <button onClick={onClick} style={{marginTop: 10}}>
+        <button onClick={onClick}>
             {title}
         </button>
-    )
+    );
 };
 
 export default Button;

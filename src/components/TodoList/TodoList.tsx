@@ -1,9 +1,8 @@
-import React, {ChangeEvent, Dispatch, SetStateAction, useState} from 'react';
-import TodoListHeader from "../TodoListHeader/TodoListHeader";
-import Button from "../ui/Button/Button";
-import {FilteredTasksTypes} from "../../App";
-import {v4} from "uuid";
-import {EditableSpan} from "../EditableSpan/EditableSpan";
+import React, { ChangeEvent, useState } from 'react';
+import TodoListHeader from '../TodoListHeader/TodoListHeader';
+import Button from '../ui/Button/Button';
+import { FilteredTasksTypes } from '../../App';
+import { EditableSpan } from '../EditableSpan/EditableSpan';
 
 export type TasksPropsTypes = {
     id: string
@@ -14,8 +13,8 @@ export type TasksPropsTypes = {
 type TodoListPropsTypes = {
     title: string
     tasks: TasksPropsTypes[]
-    setTasks: Dispatch<SetStateAction<TasksPropsTypes[]>>
-    removeTaskHandler: (id: string) => void
+    addTask: (value: string) => void
+    removeTask: (id: string) => void
     changeFilter: (filter: FilteredTasksTypes) => void
     changeTaskStatus: (id: string) => void
     changeTaskTitleValue: (id: string, newValue: string) => void
@@ -26,8 +25,8 @@ export const TodoList = (props: TodoListPropsTypes) => {
     const {
         title,
         tasks,
-        setTasks,
-        removeTaskHandler,
+        addTask,
+        removeTask,
         changeFilter,
         changeTaskStatus,
         changeTaskTitleValue,
@@ -35,75 +34,73 @@ export const TodoList = (props: TodoListPropsTypes) => {
 
     const [value, setValue] = useState<string>('');
 
-    const onAddNewTask = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value)
+    const addNewTask = (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value);
     };
 
-    const addTaskHandler = (value: string) => {
-        if (value) {
-            setTasks([
-                ...tasks, {
-                    id: v4(),
-                    title: value,
-                    isDone: false
-                }])
-            setValue('')
-        }
+    const addTaskHandler = () => {
+        addTask(value);
+        setValue('');
+    };
+
+    const changeFilterHandler = (filter: FilteredTasksTypes) => {
+        changeFilter(filter);
+    };
+
+    const removeTaskHandler = (id: string) => {
+        removeTask(id);
+    };
+
+    const changeTaskValueHandler = (id: string, newValue: string) => {
+        changeTaskTitleValue(id, newValue);
     };
 
     let tasksList = tasks.length === 0
         ? <span>No tasks...</span>
         : (
-            <ul style={{margin: 0, padding: 0}}>
+            <ul style={{ margin: 0, padding: 0 }}>
                 {tasks.map((task) => {
-
-                    const onChangeTaskValue = (id: string, newValue: string) => {
-                        changeTaskTitleValue(id, newValue)
-                    }
-
                     return (
-
                         <li key={task.id}>
-                            <input
+                            < input
                                 type="checkbox"
                                 checked={task.isDone}
                                 onChange={() => changeTaskStatus(task.id)}
                             />
                             <EditableSpan
                                 title={task.title}
-                                onChange={(val) => onChangeTaskValue(task.id, val)}
+                                onChange={(val) => changeTaskValueHandler(task.id, val)}
                             />
-                            <button onClick={() => removeTaskHandler(task.id)}>x</button>
-                            <button>edit</button>
+                            <Button title={'x'} onClick={() => removeTaskHandler(task.id)} />
                         </li>
-                    )
+                    );
                 })}
             </ul>
         );
 
     return (
         <div className={'todolist'}>
-            <TodoListHeader title={title}/>
+            <TodoListHeader title={title} />
             <div>
                 <input
                     value={value}
-                    onChange={(e) => onAddNewTask(e)}
+                    onChange={(e) => addNewTask(e)}
                 />
-                <button onClick={() => addTaskHandler(value)}>+</button>
+                <Button title={'+'} onClick={addTaskHandler} />
             </div>
             {tasksList}
             <div>
                 <Button
                     title={'All'}
-                    onClick={() => changeFilter('all')}
+                    onClick={() => changeFilterHandler('all')}
                 />
                 <Button
                     title={'Active'}
-                    onClick={() => changeFilter('active')}
+                    onClick={() => changeFilterHandler('active')}
                 />
                 <Button
                     title={'Complete'}
-                    onClick={() => changeFilter('complete')}
+                    onClick={() => changeFilterHandler('complete')}
                 />
             </div>
         </div>
