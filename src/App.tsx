@@ -34,21 +34,26 @@ function App() {
             { id: v4(), title: 'React', isDone: false },
         ],
         [todoListId2]: [
-            { id: v4(), title: 'HTML&CSS', isDone: true },
-            { id: v4(), title: 'JS', isDone: true },
-            { id: v4(), title: 'React', isDone: false },
+            { id: v4(), title: 'Milk', isDone: true },
+            { id: v4(), title: 'Apple', isDone: true },
+            { id: v4(), title: 'Juice', isDone: false },
         ],
     });
 
-    const addTask = (value: string, todoListId: string) => {
+    const addTask = (newValue: string, todoListId: string) => {
         setTasks({
             ...tasks, [todoListId]: [{
                 id: v4(),
-                title: value,
+                title: newValue,
                 isDone: false,
             }, ...tasks[todoListId]],
         });
     };
+
+    const removeTodoList = (todoListId: string) => {
+        setTodoLists(todoLists.filter(t => t.id !== todoListId))
+        delete tasks[todoListId]
+    }
 
     const removeTask = (id: string, todoListId: string) => {
         setTasks({
@@ -61,11 +66,14 @@ function App() {
         setTodoLists(todoLists.map(tl => (tl.id === todolistId ? { ...tl, filter } : tl)));
     };
 
-    const changeTaskStatus = (taskId: string, todoListId: string, taskStatus: boolean) => {
+    const changeTaskStatus = ( taskStatus: boolean, taskId: string, todoListId: string,) => {
         setTasks({
             ...tasks,
             [todoListId]: tasks[todoListId]
-                .map(t => (t.id === taskId ? { ...t, isDone: taskStatus } : t)),
+                .map(t => (t.id === taskId
+                        ? { ...t, isDone: taskStatus }
+                        : t
+                )),
         });
     };
 
@@ -73,7 +81,7 @@ function App() {
         setTasks({
             ...tasks,
             [todoListId]: tasks[todoListId]
-                .map(t => (t.id === taskId ? {...t, title: newValue}: t))
+                .map(t => (t.id === taskId ? { ...t, title: newValue } : t)),
         });
     };
 
@@ -95,15 +103,16 @@ function App() {
                 return (
                     <TodoList
                         key={tl.id}
-                        todoListId={tl.id}
                         title={tl.title}
                         tasks={tasksForTodoList}
+                        todoListId={tl.id}
+                        filter={tl.filter}
+                        addTask={addTask}
+                        removeTodoList={removeTodoList}
                         removeTask={removeTask}
                         changeFilter={changeFilter}
-                        changeTaskTitleValue={changeTaskTitleValue}
-                        addTask={addTask}
                         changeTaskStatus={changeTaskStatus}
-                        filter={tl.filter}
+                        changeTaskTitleValue={changeTaskTitleValue}
                     />
                 );
             })}

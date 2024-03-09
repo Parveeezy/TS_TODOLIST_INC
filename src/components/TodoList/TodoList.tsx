@@ -8,12 +8,13 @@ type TodoListPropsTypes = {
     title: string
     tasks: TasksTypes[]
     todoListId: string
-    addTask: (value: string, todoListId: string) => void
+    filter: FilteredTasksTypes
+    addTask: (newValue: string, todoListId: string) => void
+    removeTodoList: (todoListId: string) => void
     removeTask: (id: string, todoListId: string) => void
     changeFilter: (filter: FilteredTasksTypes, todoListId: string) => void
-    changeTaskStatus: (taskId: string, todoListId: string, taskStatus: boolean) => void
+    changeTaskStatus: (taskStatus: boolean, taskId: string, todoListId: string) => void
     changeTaskTitleValue: (id: string, todoListId: string, newValue: string) => void
-    filter: FilteredTasksTypes
 };
 
 export const TodoList = (props: TodoListPropsTypes) => {
@@ -23,6 +24,7 @@ export const TodoList = (props: TodoListPropsTypes) => {
         tasks,
         todoListId,
         addTask,
+        removeTodoList,
         removeTask,
         changeFilter,
         changeTaskStatus,
@@ -34,6 +36,10 @@ export const TodoList = (props: TodoListPropsTypes) => {
     const addNewTask = (e: ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
     };
+
+    const removeTodoListHandler = (todoListId: string) => {
+        removeTodoList(todoListId)
+    }
 
     const addTaskHandler = () => {
         addTask(value, todoListId);
@@ -52,6 +58,10 @@ export const TodoList = (props: TodoListPropsTypes) => {
         changeTaskTitleValue(id, todoListId, newValue);
     };
 
+    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, taskId: string) => {
+        changeTaskStatus(e.target.checked, taskId, todoListId);
+    };
+
     let tasksList = tasks.length === 0
         ? <span>No tasks...</span>
         : (
@@ -62,7 +72,7 @@ export const TodoList = (props: TodoListPropsTypes) => {
                             < input
                                 type="checkbox"
                                 checked={task.isDone}
-                                onChange={() => changeTaskStatus(task.id, todoListId, task.isDone)}
+                                onChange={(e) => changeTaskStatusHandler(e, task.id)}
                             />
                             <EditableSpan
                                 title={task.title}
@@ -77,7 +87,11 @@ export const TodoList = (props: TodoListPropsTypes) => {
 
     return (
         <div className={'todolist'}>
-            <TodoListHeader title={title} />
+            <TodoListHeader
+                title={title}
+                removeTodoListHandler={() => removeTodoListHandler(todoListId)}
+                todoListId={todoListId}
+            />
             <div>
                 <input
                     value={value}
