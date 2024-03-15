@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import { TodoList } from './components/TodoList/TodoList';
 import { v4 } from 'uuid';
+import NewTodoList from './components/NewTodoList';
+import { Container } from '@mui/material';
 
 export type FilteredTasksTypes = 'all' | 'active' | 'completed';
 
@@ -51,9 +53,9 @@ function App() {
     };
 
     const removeTodoList = (todoListId: string) => {
-        setTodoLists(todoLists.filter(t => t.id !== todoListId))
-        delete tasks[todoListId]
-    }
+        setTodoLists(todoLists.filter(t => t.id !== todoListId));
+        delete tasks[todoListId];
+    };
 
     const removeTask = (id: string, todoListId: string) => {
         setTasks({
@@ -66,7 +68,7 @@ function App() {
         setTodoLists(todoLists.map(tl => (tl.id === todolistId ? { ...tl, filter } : tl)));
     };
 
-    const changeTaskStatus = ( taskStatus: boolean, taskId: string, todoListId: string,) => {
+    const changeTaskStatus = (taskStatus: boolean, taskId: string, todoListId: string) => {
         setTasks({
             ...tasks,
             [todoListId]: tasks[todoListId]
@@ -86,7 +88,8 @@ function App() {
     };
 
     return (
-        <div className="App">
+        <Container>
+            <NewTodoList />
             {todoLists.map(tl => {
 
                 const allTodolistTasks = tasks[tl.id];
@@ -116,7 +119,7 @@ function App() {
                     />
                 );
             })}
-        </div>
+        </Container>
     );
 }
 

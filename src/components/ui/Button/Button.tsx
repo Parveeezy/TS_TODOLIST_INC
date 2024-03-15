@@ -1,17 +1,16 @@
 import React from 'react';
+import Button from '@mui/material/Button';
 
 type ButtonPropsTypes = {
     title: string
     onClick: () => void
 };
 
-const Button = ({ title, onClick }: ButtonPropsTypes) => {
+export const ButtonUi = ({ title, onClick }: ButtonPropsTypes) => {
 
     return (
-        <button onClick={onClick}>
+        <Button onClick={onClick}>
             {title}
-        </button>
+        </Button>
     );
 };
-
-export default Button;

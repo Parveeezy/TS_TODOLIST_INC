@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
 import TodoListHeader from '../TodoListHeader/TodoListHeader';
-import Button from '../ui/Button/Button';
 import { FilteredTasksTypes, TasksTypes } from '../../App';
 import { EditableSpan } from '../EditableSpan/EditableSpan';
+import { ButtonGroup } from '@mui/material';
+import { ButtonUi } from '../ui/Button/Button';
+import { TodoListWrapper } from './components';
 
 type TodoListPropsTypes = {
     title: string
@@ -38,8 +40,8 @@ export const TodoList = (props: TodoListPropsTypes) => {
     };
 
     const removeTodoListHandler = (todoListId: string) => {
-        removeTodoList(todoListId)
-    }
+        removeTodoList(todoListId);
+    };
 
     const addTaskHandler = () => {
         addTask(value, todoListId);
@@ -63,13 +65,13 @@ export const TodoList = (props: TodoListPropsTypes) => {
     };
 
     let tasksList = tasks.length === 0
-        ? <span>No tasks...</span>
+        ? <div><span>No tasks...</span></div>
         : (
             <ul style={{ margin: 0, padding: 0 }}>
                 {tasks.map((task) => {
                     return (
                         <li key={task.id}>
-                            < input
+                            <input
                                 type="checkbox"
                                 checked={task.isDone}
                                 onChange={(e) => changeTaskStatusHandler(e, task.id)}
@@ -78,7 +80,7 @@ export const TodoList = (props: TodoListPropsTypes) => {
                                 title={task.title}
                                 onChange={(val) => changeTaskValueHandler(task.id, todoListId, val)}
                             />
-                            <Button title={'x'} onClick={() => removeTaskHandler(task.id)} />
+                            <ButtonUi title={'x'} onClick={() => removeTaskHandler(task.id)} />
                         </li>
                     );
                 })}
@@ -86,7 +88,7 @@ export const TodoList = (props: TodoListPropsTypes) => {
         );
 
     return (
-        <div className={'todolist'}>
+        <TodoListWrapper>
             <TodoListHeader
                 title={title}
                 removeTodoListHandler={() => removeTodoListHandler(todoListId)}
@@ -97,23 +99,23 @@ export const TodoList = (props: TodoListPropsTypes) => {
                     value={value}
                     onChange={(e) => addNewTask(e)}
                 />
-                <Button title={'+'} onClick={addTaskHandler} />
+                <ButtonUi title={'+'} onClick={addTaskHandler} />
             </div>
             {tasksList}
-            <div>
-                <Button
+            <ButtonGroup variant="outlined" size="small" color="secondary">
+                <ButtonUi
                     title={'All'}
                     onClick={() => changeFilterHandler('all')}
                 />
-                <Button
+                <ButtonUi
                     title={'Active'}
                     onClick={() => changeFilterHandler('active')}
                 />
-                <Button
+                <ButtonUi
                     title={'Complete'}
                     onClick={() => changeFilterHandler('completed')}
                 />
-            </div>
-        </div>
+            </ButtonGroup>
+        </TodoListWrapper>
     );
 };

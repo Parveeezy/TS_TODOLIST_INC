@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../ui/Button/Button';
+import { ButtonUi } from '../ui/Button/Button';
 
 type TodoListHeaderPropsTypes = {
     title: string
@@ -9,9 +9,9 @@ type TodoListHeaderPropsTypes = {
 
 const TodoListHeader = ({ title, removeTodoListHandler, todoListId }: TodoListHeaderPropsTypes) => {
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex'}}>
             <h2 style={{ margin: 0 }}>{title}</h2>
-            <Button
+            <ButtonUi
                 title={'x'}
                 onClick={() => removeTodoListHandler(todoListId)}
             />
