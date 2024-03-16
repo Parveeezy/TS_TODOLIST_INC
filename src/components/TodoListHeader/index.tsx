@@ -1,5 +1,6 @@
 import React from 'react';
 import { ButtonUi } from '../ui/Button/Button';
+import { TodoListHeaderWrapper } from './components';
 
 type TodoListHeaderPropsTypes = {
     title: string
@@ -7,16 +8,14 @@ type TodoListHeaderPropsTypes = {
     todoListId: string
 }
 
-const TodoListHeader = ({ title, removeTodoListHandler, todoListId }: TodoListHeaderPropsTypes) => {
+export const TodoListHeader = ({ title, removeTodoListHandler, todoListId }: TodoListHeaderPropsTypes) => {
     return (
-        <div style={{ display: 'flex'}}>
-            <h2 style={{ margin: 0 }}>{title}</h2>
+        <TodoListHeaderWrapper>
+            <h2>{title}</h2>
             <ButtonUi
                 title={'x'}
                 onClick={() => removeTodoListHandler(todoListId)}
             />
-        </div>
+        </TodoListHeaderWrapper>
     );
 };
-
-export default TodoListHeader;

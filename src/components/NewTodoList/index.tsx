@@ -1,20 +1,25 @@
 import React from 'react';
-import { NewTodoListWrapper } from './components';
+import { NewTodoListTitle, NewTodoListWrapper } from './components';
 import { ButtonUi } from '../ui/Button/Button';
+import InputUi from '../ui/Input';
 
 const NewTodoList = () => {
     return (
-        <NewTodoListWrapper>
-            <h1>Todo List</h1>
-            <div>
-                <input />
-                <ButtonUi
-                    title={'Add New Todo'}
-                    onClick={() => {
-                    }}
+        <>
+            <NewTodoListTitle>Todo List</NewTodoListTitle>
+            <NewTodoListWrapper>
+                <InputUi
+                    value={''}
+                    onChange={() => {}}
+                    placeholder={'Add your new Todo List'}
                 />
-            </div>
-        </NewTodoListWrapper>
+                <ButtonUi
+                    title={'Add'}
+                    onClick={() => {}}
+                />
+            </NewTodoListWrapper>
+        </>
+
     );
 };
 

@@ -1,11 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Yatra+One&display=swap");
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Yatra One", system-ui;
+  font-weight: 400;
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #343434;
+  background-color: rgba(54, 49, 190, 0.5);
 }
 
 code {
@@ -16,10 +18,4 @@ code {
 li {
   list-style-type: none;
   margin-top: 5px;
-}
-
-.todolist{
-  background-color: #70a9a9;
-  border-radius: 5px;
-  padding: 30px;
 }

@@ -4,5 +4,13 @@ export const NewTodoListWrapper = styled('div')({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    color: '#dedede'
+    gap: 10,
+    color: '#ffffff',
+});
+
+export const NewTodoListTitle = styled('h1')({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#ffffff'
 });

@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import InputUi from '../ui/Input';
 
 type EditableSpanPropsType = {
     title: string
@@ -24,12 +25,12 @@ export function EditableSpan(props: EditableSpanPropsType) {
     };
     return (
         editMode
-            ? <input
+            ? <InputUi
                 value={title}
                 onBlur={activateViewMode}
                 onChange={onChangeTitleValue}
-                autoFocus
+                placeholder={'Edit your task'}
             />
-            : <span onDoubleClick={activateEditMode}>{props.title}</span>
+            : <span onDoubleClick={activateEditMode} style={{marginRight: 10}}>{props.title}</span>
     );
 }

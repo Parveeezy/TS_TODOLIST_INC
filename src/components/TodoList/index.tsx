@@ -1,10 +1,16 @@
 import React, { ChangeEvent, useState } from 'react';
-import TodoListHeader from '../TodoListHeader/TodoListHeader';
 import { FilteredTasksTypes, TasksTypes } from '../../App';
-import { EditableSpan } from '../EditableSpan/EditableSpan';
-import { ButtonGroup } from '@mui/material';
+import { EditableSpan } from '../EditableSpan';
 import { ButtonUi } from '../ui/Button/Button';
-import { TodoListWrapper } from './components';
+import {
+    TodoListButtonsStatusGroup,
+    TodoListTask,
+    TodoListTasksWrapper,
+    TodoListWrapper,
+} from './components';
+import { StatusButtonUi } from '../ui/StatusButton/StatusButton';
+import { TodoListHeader } from '../TodoListHeader';
+import InputUi from '../ui/Input';
 
 type TodoListPropsTypes = {
     title: string
@@ -67,10 +73,10 @@ export const TodoList = (props: TodoListPropsTypes) => {
     let tasksList = tasks.length === 0
         ? <div><span>No tasks...</span></div>
         : (
-            <ul style={{ margin: 0, padding: 0 }}>
+            <TodoListTasksWrapper>
                 {tasks.map((task) => {
                     return (
-                        <li key={task.id}>
+                        <TodoListTask key={task.id}>
                             <input
                                 type="checkbox"
                                 checked={task.isDone}
@@ -81,10 +87,10 @@ export const TodoList = (props: TodoListPropsTypes) => {
                                 onChange={(val) => changeTaskValueHandler(task.id, todoListId, val)}
                             />
                             <ButtonUi title={'x'} onClick={() => removeTaskHandler(task.id)} />
-                        </li>
+                        </TodoListTask>
                     );
                 })}
-            </ul>
+            </TodoListTasksWrapper>
         );
 
     return (
@@ -95,27 +101,28 @@ export const TodoList = (props: TodoListPropsTypes) => {
                 todoListId={todoListId}
             />
             <div>
-                <input
+                <InputUi
                     value={value}
                     onChange={(e) => addNewTask(e)}
+                    placeholder={'Add task...'}
                 />
                 <ButtonUi title={'+'} onClick={addTaskHandler} />
             </div>
             {tasksList}
-            <ButtonGroup variant="outlined" size="small" color="secondary">
-                <ButtonUi
+            <TodoListButtonsStatusGroup variant="outlined" size="small">
+                <StatusButtonUi
                     title={'All'}
                     onClick={() => changeFilterHandler('all')}
                 />
-                <ButtonUi
+                <StatusButtonUi
                     title={'Active'}
                     onClick={() => changeFilterHandler('active')}
                 />
-                <ButtonUi
+                <StatusButtonUi
                     title={'Complete'}
                     onClick={() => changeFilterHandler('completed')}
                 />
-            </ButtonGroup>
+            </TodoListButtonsStatusGroup>
         </TodoListWrapper>
     );
 };

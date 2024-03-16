@@ -1,18 +1,15 @@
 import styled from 'styled-components';
-import Button from '@mui/material/Button';
+import { Button } from '@mui/material';
 
 export const StyledButtonWrapper = styled(Button)({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     '&.MuiButton-root': {
-        minWidth: 20,
-        height: 20,
         color: '#ffffff',
-        border: '1px solid #ffffff',
-        borderRadius: 5,
-        alignContent: 'center',
-        padding: 5,
-        margin: 0,
+        borderColor: '#ffffff',
         fontFamily: `Yatra One, system-ui`,
         fontWeight: 400,
         fontStyle: 'normal',
-    }
-})
+    },
+});

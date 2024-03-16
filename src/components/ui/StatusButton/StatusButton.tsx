@@ -6,7 +6,7 @@ type ButtonPropsTypes = {
     onClick: () => void
 };
 
-export const ButtonUi = ({ title, onClick }: ButtonPropsTypes) => {
+export const StatusButtonUi = ({ title, onClick }: ButtonPropsTypes) => {
 
     return (
         <StyledButtonWrapper onClick={onClick}>
