@@ -23,13 +23,9 @@ export type TasksTypes = {
 function App() {
 
     let todoListId1 = v4();
-    let todoListId2 = v4();
-    let todoListId3 = v4();
 
     let [todoLists, setTodoLists] = useState<TodoListsTypes[]>([
         { id: todoListId1, title: 'What to learn?', filter: 'all' },
-        { id: todoListId2, title: 'What to buy?', filter: 'all' },
-        { id: todoListId3, title: 'Where to go?', filter: 'all' },
     ]);
 
     let [tasks, setTasks] = useState({
@@ -38,17 +34,15 @@ function App() {
             { id: v4(), title: 'JS', isDone: true },
             { id: v4(), title: 'React', isDone: false },
         ],
-        [todoListId2]: [
-            { id: v4(), title: 'Milk', isDone: true },
-            { id: v4(), title: 'Apple', isDone: true },
-            { id: v4(), title: 'Juice', isDone: false },
-        ],
-        [todoListId3]: [
-            { id: v4(), title: 'Cinema', isDone: true },
-            { id: v4(), title: 'Park', isDone: true },
-            { id: v4(), title: 'Job', isDone: false },
-        ],
     });
+
+    const addTodoList = (newTodoTitle: string) => {
+        const todoListId = v4()
+        const newTodolist: TodoListsTypes = { id: todoListId, title: newTodoTitle, filter: 'all' }
+
+        setTodoLists([newTodolist, ...todoLists]);
+        setTasks({...tasks, [todoListId]: []})
+    };
 
     const addTask = (newValue: string, todoListId: string) => {
         setTasks({
@@ -97,7 +91,9 @@ function App() {
 
     return (
         <Container>
-            <NewTodoList />
+            <NewTodoList
+                addTodoList={addTodoList}
+            />
             <AppContainer>
                 {todoLists.map(tl => {
 

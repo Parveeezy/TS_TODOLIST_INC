@@ -50,8 +50,10 @@ export const TodoList = (props: TodoListPropsTypes) => {
     };
 
     const addTaskHandler = () => {
-        addTask(value, todoListId);
-        setValue('');
+        if(value) {
+            addTask(value, todoListId);
+            setValue('');
+        }
     };
 
     const changeFilterHandler = (filter: FilteredTasksTypes) => {

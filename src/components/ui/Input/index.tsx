@@ -1,11 +1,12 @@
 import React, { ChangeEvent } from 'react';
 import { Input } from './components';
 
-type InputPropsType = {
+export type InputPropsType = {
     value: string
     onBlur?: () => void
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
     placeholder: string
+    place?: string
 }
 
 const InputUi = (props: InputPropsType) => {
@@ -16,6 +17,7 @@ const InputUi = (props: InputPropsType) => {
             onBlur={props.onBlur}
             autoFocus
             placeholder={props.placeholder}
+            place={props.place}
         />
     );
 };
