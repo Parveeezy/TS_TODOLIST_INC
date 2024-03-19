@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Parveeezy/TS_TODOLIST_INC/static/css/main.8e8a2c04.css",
+    "main.js": "/Parveeezy/TS_TODOLIST_INC/static/js/main.801722b2.js",
+    "index.html": "/Parveeezy/TS_TODOLIST_INC/index.html",
+    "main.8e8a2c04.css.map": "/Parveeezy/TS_TODOLIST_INC/static/css/main.8e8a2c04.css.map",
+    "main.801722b2.js.map": "/Parveeezy/TS_TODOLIST_INC/static/js/main.801722b2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8e8a2c04.css",
+    "static/js/main.801722b2.js"
+  ]
+}
